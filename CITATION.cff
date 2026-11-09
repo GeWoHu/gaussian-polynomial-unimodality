@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite the software repository as follows."
+title: "Unimodality of a Stanley-Zanello Slice: F_l = [l+8 choose 8]_q - q^(4l-18) [12 choose 6]_q"
+type: software
+authors:
+  - name: "Gerald"  # repository owner; manuscript author placeholder pending completion; substantial AI assistance, see README
+license: MIT
+repository-code: "https://github.com/GeWoHu/gaussian-polynomial-unimodality"
+date-released: 2026-11-09
+abstract: >-
+  Repository accompanying a mathematical note proving that, for every integer
+  l >= 6, F_l(q) = [l+8 choose 8]_q - q^(4l-18) [12 choose 6]_q is unimodal,
+  with sharpness at l = 5, via a 19-inequality reduction and an exact
+  15,960-class Newton-basis quasipolynomial certificate plus a finite check
+  for 6 <= l <= 839. All computations are exact-integer, standard-library
+  Python.
+keywords:
+  - Gaussian polynomial
+  - q-binomial coefficient
+  - unimodality
+  - Stanley-Zanello conjecture
+  - quasipolynomial certificate
+  - Newton basis

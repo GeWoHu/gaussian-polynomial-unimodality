@@ -1,0 +1,400 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,booktabs}
+\usepackage[margin=1.1in]{geometry}
+\usepackage[numbers,sort&compress]{natbib}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newcommand{\gauss}[2]{\genfrac{[}{]}{0pt}{0}{#1}{#2}_q}
+\newcommand{\coeff}[1]{[q^{#1}]}
+\title{\bf Sharp unimodality for a fixed-parameter slice of the Stanley--Zanello family of
+Gaussian polynomial differences}
+\author{[Author placeholder --- to be completed upon owner approval]}
+\date{9 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+For an integer $\ell \ge 5$ let
+\[
+  F_\ell(q)\;=\;\gauss{\ell+8}{8}\;-\;q^{4\ell-18}\gauss{12}{6}.
+\]
+We prove that $F_\ell$ is unimodal for every $\ell \ge 6$, and that the bound is best possible:
+$F_5$ is coefficientwise nonnegative but not unimodal. The family is a fixed-parameter slice
+$(k,b)=(8,12)$ of the difference family of Stanley and Zanello, whose conjecture predicts this
+behaviour and is proved only for $k\le 5$. The argument has three parts: an elementary
+Ferrers-diagram injection gives coefficientwise nonnegativity; symmetry about the common centre
+$4\ell$ reduces unimodality to nineteen fixed-offset first-difference inequalities; and those
+inequalities are settled for all $\ell$ by combining an exact quasipolynomial description of
+restricted partition functions with a Newton forward-difference positivity certificate, plus one
+explicit finite verification for $6\le\ell\le 839$. We state precisely which steps are theorems,
+which is a finite exact certificate, and what remains open.
+\end{abstract}
+
+\section{Introduction and relation to Stanley--Zanello}
+
+Let $\gauss{n}{k}$ denote the Gaussian binomial coefficient, generating function for partitions
+inside a $k\times(n-k)$ rectangle. Stanley and Zanello \cite{sz} attached to parameters
+$(k,m,b)$ a difference of two Gaussian polynomials
+\[
+  f(k,m,b)(q)\;=\;\gauss{m}{k}-q^{s(m)}\gauss{b}{k-2},\qquad
+  s(m)=\tfrac{k(m-b)}{2}+b-2k+2,
+\]
+admissible when $b\le(km-4k+4)/(k-2)$ and $kb\equiv km\pmod 2$, and proved nonnegativity and
+unimodality completely for $k\le 5$; their Conjecture~1.1(iv) predicts the same for every $k\ge5$,
+all $m\gg_k0$, and all admissible $b$ except $b=(km-4k+2)/(k-2)$ when that is an integer, and they
+remark that for larger $k$ ``a new idea will most likely be necessary''. Koutschan--Uncu--Wong
+\cite{kuw} settled the conjecture for $k=6$ and $k=7$ with explicit exception tables; $k\ge8$ is
+open.
+
+In this paper we settle one explicit one-parameter subfamily: with $k=8$, top parameter
+$m=\ell+8$, second-summand parameter $b=12$, the shift is $s(m)=4m-50=4\ell-18$ and the difference
+is exactly $F_\ell$ above. Admissibility holds precisely for $\ell\ge 5$ (the bound reads
+$12\le(8\ell+36)/6$), the parity condition is automatic, and the exceptional-value condition
+$b=(km-4k+2)/(k-2)$ becomes $m=51/4$, never an integer, so this slice never lies on the exceptional
+locus. We do not claim the full $k=8$ case, let alone the conjecture.
+
+Unimodality of a \emph{single} Gaussian polynomial is classical \cite{ohara,zeilberger}, and
+strict unimodality is known \cite{pakpanova,zanello2015}; those results give first differences
+$\ge 1$, which as we show in Section~\ref{sec:obstruction} is not enough here. Differences of
+Gaussian polynomials were studied earlier by Reiner and Stanton \cite{reinerstanton}, whose
+conjecture the Stanley--Zanello family generalizes. Computer-algebra resolutions of related
+Stanley--Zanello families for small parameters appear in \cite{kuw}; their parameter coverage does
+not include the slice treated here (see Section~\ref{sec:prior}).
+
+\section{Definitions and notation}
+
+All polynomials lie in $\mathbb{Z}[q]$. For $P(q)=\sum_p c_p q^p$ we write $\coeff{m}P=c_m$ and set
+$c_m=0$ outside $\{0,\dots,\deg P\}$; this convention is used in every difference formula below.
+$P$ is \emph{unimodal} if $c_0\le\cdots\le c_j\ge c_{j+1}\ge\cdots\ge c_D$ for some $j$, plateaus
+permitted; we never claim strict unimodality. $P\ge 0$ \emph{coefficientwise} means $c_m\ge 0$ for
+all $m$. For $\ell\ge 5$ put
+\[
+  G_\ell(q)=\gauss{\ell+8}{8},\quad a_\ell(n)=\coeff{n}G_\ell,\quad
+  B(q)=\gauss{12}{6},\quad b_j=\coeff{j}B,\quad
+  F_\ell=G_\ell-q^{4\ell-18}B .
+\]
+$\deg G_\ell=8\ell$; $\deg(q^{4\ell-18}B)=4\ell+18\le 8\ell$ exactly when $\ell\ge5$, which is the
+origin of the admissible range. Both summands are palindromic about degree $4\ell$, hence so is
+$F_\ell$.
+
+\section{Main result}
+
+\begin{theorem}\label{thm:main}
+For every integer $\ell\ge 6$, $F_\ell(q)$ is unimodal.
+\end{theorem}
+
+\begin{theorem}\label{thm:nonneg}
+For every integer $\ell\ge 5$, $F_\ell(q)\ge 0$ coefficientwise.
+\end{theorem}
+
+\begin{theorem}[Sharpness]\label{thm:sharp}
+$F_5$ is coefficientwise nonnegative and not unimodal; explicitly
+$\coeff{18..22}F_5=(15,16,15,16,15)$.
+\end{theorem}
+
+Theorem~\ref{thm:nonneg} is proved by an elementary injection (Section~\ref{sec:injection});
+Theorem~\ref{thm:main} by Theorems~\ref{thm:reduction} and \ref{thm:certificate}
+(Sections~\ref{sec:reduction}--\ref{sec:certificate}); Theorem~\ref{thm:sharp} by direct exact
+computation, which is legitimate because it is a single instance.
+
+\section{The Ferrers-diagram injection and nonnegativity}\label{sec:injection}
+
+Identify $a_\ell(n)$ with the number of partitions $\lambda=(\lambda_1\ge\cdots\ge\lambda_8\ge0)$
+of $n$ with $\lambda_1\le\ell$, and $b_j$ with partitions of $j$ inside a $6\times6$ rectangle.
+Padding a partition of $4\ell-18+j$ to exactly eight parts and adding
+$(1,1,1,1,0,0,0,0)$ yields a partition of $4\ell-14+j$ inside the $8\times(\ell+1)$ box: the
+inequality $\lambda_4\ge\lambda_5$ is preserved strictly, the degree rises by $4=s(m+1)-s(m)$, and
+the largest part rises by at most $1$, exactly the box growth. Translation by a fixed vector is
+injective. Summing over the $37$ offsets $0\le j\le 36$ of the subtracted window gives the
+monotonicity statement below. The exact base check is at $\ell=5$ ($m=13$): the minimum window
+margin of $F_5$ is $1$, attained at degree $2$, so every window margin is at least $1\ge0$; one step
+further, at $\ell=6$, the minimum window margin is $10$, attained at degree $6$. Propagating from
+the base $\ell=5$ gives Theorem~\ref{thm:nonneg}. (An earlier draft of this package misstated the
+base margin at $\ell=5$ as $10$; the value $10$ is the $\ell=6$ margin. Both values are recomputed
+from the definitions in the accompanying code, and the verification program asserts them.)
+
+\begin{theorem}[Monotone window injection, even $k$ \cite{sz}]\label{thm:injection}
+Let $k\ge4$ be even and $(m,b)$ admissible, and let
+$f(k,m,b)=\gauss{m}{k}-q^{s(m)}\gauss{b}{k-2}$ with
+$s(m)=k(m-b)/2+b-2k+2$. Then for every fixed offset $j\ge0$,
+\[
+  \coeff{s(m)+j}\gauss{m}{k}\;\le\;\coeff{s(m+1)+j}\gauss{m+1}{k}.
+\]
+Consequently coefficientwise nonnegativity of $f(k,m,b)$ is monotone in $m$: once it holds at an
+admissible $m_0$ it holds for all admissible $m\ge m_0$, so eventual nonnegativity for fixed
+$(k,b)$ reduces to a finite exact check.
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:injection}]
+Let $k\ge4$ be even and let $(m,b)$ be admissible: $3\le k\le m$, $3\le b\le(km-4k+4)/(k-2)$, and
+$kb\equiv km\pmod2$; then $s(m)=k(m-b)/2+b-2k+2$ is an integer, and admissibility of $(m+1,b)$ is
+automatic because $k$ is even and the upper bound on $b$ is nondecreasing in $m$. Represent
+$\gauss{m}{k}$ as generating partitions $\lambda=(\lambda_1\ge\cdots\ge\lambda_k\ge0)$ of the box
+$k\times(m-k)$, that is, with $\lambda_1\le m-k$, and degree $|\lambda|$. Define
+\[
+  \Phi(\lambda)=\bigl(\lambda_1+1,\dots,\lambda_{k/2}+1,\ \lambda_{k/2+1},\dots,\lambda_k\bigr).
+\]
+Then $\Phi(\lambda)$ is a partition: the only adjacent pair affected is $(k/2,\,k/2+1)$, where
+$\lambda_{k/2}+1\ge\lambda_{k/2+1}+1>\lambda_{k/2+1}$; equivalently, the Ferrers diagram grows by
+exactly one cell in each of its first $k/2$ rows, which preserves the partition shape because row
+lengths are weakly decreasing. It lies in the $k\times(m+1-k)$ box because
+$\lambda_1+1\le(m-k)+1=(m+1)-k$. Its degree is $|\lambda|+k/2$, and $s(m+1)-s(m)=k/2$ since $k$ is
+even. Hence $\Phi$ maps partitions of $s(m)+j$ in the $k\times(m-k)$ box into partitions of
+$s(m+1)+j$ in the $k\times(m+1-k)$ box; it is injective because it is translation by a fixed
+vector. Comparing coefficients yields $\coeff{s(m)+j}\gauss{m}{k}\le
+\coeff{s(m+1)+j}\gauss{m+1}{k}$ for every fixed offset $j\ge0$.
+
+For nonnegativity, outside the window $\{s(m),\dots,s(m)+\deg\gauss{b}{k-2}\}$ the coefficients of
+$f(k,m,b)$ equal those of $\gauss{m}{k}$ and are nonnegative; inside, the coefficient at offset $j$
+is $\coeff{s(m)+j}\gauss{m}{k}-b_j$, where $b_j=\coeff{j}\gauss{b}{k-2}$ does not depend on $m$. The
+inequality above shows each window margin is nondecreasing along admissible $m$, so nonnegativity at
+one admissible $m_0$ --- a finite check of $\deg\gauss{b}{k-2}+1$ integers --- implies
+nonnegativity for all admissible $m\ge m_0$. For the slice $(k,b)=(8,12)$ the base is $m_0=13$
+($\ell=5$) with minimum window margin $1$, as computed above.
+\end{proof}
+
+The argument requires $k$ even; the odd-$k$ analogue is not claimed. The injection controls
+nonnegativity only, and its technique is adjacent to the column-growth step of O'Hara's proof
+\cite{ohara}; see Section~\ref{sec:prior} for the priority discussion.
+
+\section{Adjacent-difference reduction}\label{sec:reduction}
+
+Because $F_\ell$ is symmetric about $4\ell$, unimodality is equivalent to
+$\coeff{d}F_\ell\le\coeff{d+1}F_\ell$ for $0\le d\le 4\ell-1$. Writing $j=d-(4\ell-18)$,
+\[
+  \coeff{d+1}F_\ell-\coeff{d}F_\ell
+  \;=\;\bigl(a_\ell(d+1)-a_\ell(d)\bigr)-\bigl(b_{j+1}-b_j\bigr).
+\]
+For $j\le-2$ both $b$-indices are negative and the right-hand side equals
+$a_\ell(d+1)-a_\ell(d)\ge0$ by unimodality of $G_\ell$, since $d+1<4\ell$. For $j\ge18$ symmetry
+applies. Exactly $j=-1,0,\dots,17$ carry conditions. The endpoint $j=-1$ is not free:
+$b_0-b_{-1}=1$.
+
+\begin{theorem}[Reduction]\label{thm:reduction}
+For every $\ell\ge6$, $F_\ell$ is unimodal if and only if
+\[
+  a_\ell(4\ell-18+j+1)-a_\ell(4\ell-18+j)\;\ge\; D b_j
+  \qquad (j=-1,0,\dots,17),
+\]
+where $D b_j=b_{j+1}-b_j$ is the vector displayed in Table~\ref{tab:db}.
+\end{theorem}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{crrrrrrrrrrrrrrrrrrr}
+\toprule
+$j$ & $-1$&$0$&$1$&$2$&$3$&$4$&$5$&$6$&$7$&$8$&$9$&$10$&$11$&$12$&$13$&$14$&$15$&$16$&$17$\\
+\midrule
+$Db_j$ & $1$&$0$&$1$&$1$&$2$&$2$&$4$&$2$&$5$&$4$&$6$&$4$&$7$&$3$&$6$&$3$&$4$&$0$&$3$\\
+\bottomrule
+\end{tabular}
+\caption{The nineteen required lower bounds, computed from $\gauss{12}{6}$ in the accompanying
+code rather than tabulated by hand. The interior maximum is $Db_{11}=7$; the binding case for large
+$\ell$ is $j=17$, the step immediately before the centre.}
+\label{tab:db}
+\end{table}
+
+\section{Quasipolynomial certification}\label{sec:certificate}
+
+\begin{lemma}\label{lem:quasi}
+Let $p(n)=\coeff{n}\prod_{i=1}^{8}(1-q^i)^{-1}$ with $p(n)=0$ for $n<0$. Then $p$ is a
+quasipolynomial in $n$ of degree at most $7$ and period dividing $840=\mathrm{lcm}(1,\dots,8)$,
+valid for every $n\ge0$.
+\end{lemma}
+
+\begin{proof}
+The generating function $P(q)=1/D(q)$ with $D(q)=\prod_{i=1}^{8}(1-q^i)$ is a \emph{proper} rational
+function: the numerator is $1$ and $\deg D=1+\cdots+8=36>0$. Its poles are the roots of unity
+$\zeta$ of order dividing $840=\mathrm{lcm}(1,\dots,8)$, and the multiplicity of $\zeta$ as a pole
+is $m(\zeta)=|\{1\le i\le 8: \zeta^i=1\}|\le 8$, attained only at $\zeta=1$. Because the fraction
+is proper, its partial fraction decomposition over $\mathbb{C}$ has \emph{no polynomial part}: it is
+the exact identity of rational functions
+\[
+  \frac{1}{D(q)}
+  \;=\;\sum_{\zeta^{840}=1}\ \sum_{r=1}^{m(\zeta)}
+        \frac{c_{\zeta,r}}{(1-q/\zeta)^{r}},
+  \qquad c_{\zeta,r}\in\mathbb{C},
+\]
+summed over all $840$-th roots of unity. Expanding each term as a geometric-type series,
+$\coeff{n}(1-q/\zeta)^{-r}=\binom{n+r-1}{r-1}\zeta^{-n}$, an identity of formal power series valid
+for \emph{every} $n\ge0$. Hence for all $n\ge0$,
+\[
+  p(n)=\sum_{\zeta^{840}=1}\ \sum_{r=1}^{m(\zeta)}
+        c_{\zeta,r}\binom{n+r-1}{r-1}\zeta^{-n},
+\]
+and since $\zeta^{-840}=1$, on each residue class $n\equiv\rho\pmod{840}$ the factors $\zeta^{-n}$
+are constant, so $p(\rho+840t)$ is a polynomial in $t$ (equivalently in $n$) of degree at most
+$\max_\zeta m(\zeta)-1=7$. Grouping conjugate summands shows the class polynomials have rational
+coefficients; they take integer values because $p$ does. No ``sufficiently large $n$'' qualification
+appears anywhere: the only finitely-supported contributions that ordinary asymptotic quasipolynomial
+statements need are absent here precisely because the numerator is constant and the decomposition
+carries no polynomial part.
+\end{proof}
+
+\begin{lemma}[Inclusion--exclusion]\label{lem:ie}
+$a_\ell(n)=\sum_{S\subseteq\{1,\dots,8\}}(-1)^{|S|}\,p\bigl(n-|S|\ell-\sigma(S)\bigr)$,
+$\sigma(S)=\sum_{i\in S}i$.
+\end{lemma}
+
+\begin{proof}
+Expand $\prod_{i=1}^{8}(1-q^{\ell+i})$ in
+$\gauss{\ell+8}{8}=\prod_{i=1}^{8}(1-q^{\ell+i})\prod_{i=1}^{8}(1-q^i)^{-1}$ and extract
+coefficients.
+\end{proof}
+
+For the offsets at hand $n=4\ell-18+j$ with $j\le17$, so the argument of $p$ belonging to a subset
+$S$ with $|S|=4$ is at most $-1-10=-11<0$, and for $|S|\ge5$ it is at most $-\ell-11$. Hence:
+
+\begin{corollary}\label{cor:poly}
+For $\ell\ge840$ and each offset $j$, the margin
+$Q_{j,r}(t):=a_\ell(4\ell-18+j+1)-a_\ell(4\ell-18+j)-Db_j$ with
+$\ell=r+840(t+1)$, $0\le r<840$, is a polynomial in $t$ of degree at most $7$, valid for all
+integer $t\ge0$.
+\end{corollary}
+
+\begin{lemma}[Newton positivity]\label{lem:newton}
+If a real polynomial $Q$ of degree at most $7$ satisfies $\Delta^i Q(0)\ge0$ for $i=0,\dots,7$,
+where $\Delta$ is the forward difference, then $Q(t)\ge0$ for every integer $t\ge0$.
+\end{lemma}
+
+\begin{proof}
+Newton's expansion $Q(t)=\sum_{i=0}^{7}\binom{t}{i}\Delta^iQ(0)$ with $\binom{t}{i}\ge0$ for
+integer $t\ge0$.
+\end{proof}
+
+\begin{theorem}[Certificate]\label{thm:certificate}
+For every $j\in\{-1,\dots,17\}$ and every $r\in\{0,\dots,839\}$, the eight Newton coefficients
+$\Delta^i Q_{j,r}(0)$, $i=0,\dots,7$, are nonnegative. Consequently the nineteen inequalities of
+Theorem~\ref{thm:reduction} hold for all $\ell\ge840$.
+\end{theorem}
+
+The theorem's hypothesis is a finite assertion about $19\cdot840=15{,}960$ integer octuples,
+produced and validated by the accompanying code (Section~\ref{sec:repro}). Two features are worth
+recording. First, the sixth and seventh Newton coefficients vanish identically in every class, so
+the true degree is at most $5$; the degree-$7$ bound is used only to size the certificate. Second,
+the smallest tail margin is $3{,}552{,}106{,}826$, so the tail is far from sharp: all the tension in
+Theorem~\ref{thm:main} lives in the finite base $6\le\ell\le839$, where the minimum margin is $1$,
+attained at $(\ell,j)=(6,16)$, and where the central surplus equals exactly $4$ against the required
+$3$ at $\ell=6,7$.
+
+\subsection{Why this is a certificate and not experimental evidence}\label{sec:why}
+Corollary~\ref{cor:poly} and Lemma~\ref{lem:newton} together turn the computation into a proof of a
+statement about \emph{all} $\ell\ge840$: the computation only verifies the hypotheses of a theorem
+about polynomials, over an explicitly enumerated finite set. No interpolation, no floating point, and
+no asymptotic fitting is involved; the values are integers obtained from the definitions, and the
+verification package recomputes the complete Newton vectors of every obligation through a second
+independent code path (dense truncated Gaussian multiplication), so a value-tampered certificate
+cannot pass.
+
+\subsection{The obstruction to an injection-only proof}\label{sec:obstruction}
+The injection of Section~\ref{sec:injection} can be sharpened to an exact identity. Adding $1$ to
+the largest part maps partitions of $n$ with $\lambda_1\le\ell-1$ bijectively onto partitions of
+$n+1$ with $\mu_1\ge\mu_2+1$, whence
+\[
+  a_\ell(n+1)-a_\ell(n)
+  \;=\;\#\{\mu\vdash n+1 \text{ in the } 8\times\ell \text{ box}: \mu_1=\mu_2\}
+   \;-\;\#\{\lambda\vdash n \text{ in the box}: \lambda_1=\ell\}.
+\]
+Both terms are, at fixed offset, degree-$6$ quasi-polynomials in $\ell$, and their degree-$6$
+leading terms cancel exactly while the degree-$5$ term survives: the difference is of degree
+exactly $5$ on each residue class modulo $840$---precisely what the certificate records (the fifth
+Newton coefficient is nonzero in all $15{,}960$ classes and the sixth and seventh vanish
+identically). The mechanism is the palindromic symmetry $a_\ell(m)=a_\ell(8\ell-m)$: the window
+sits at the centre of the coefficient array, so the continuous slice-volume expansion in powers
+of $1/\ell$ is even about the centre and its first difference contributes no degree-$7$ or
+degree-$6$ term, with leading smooth term proportional to $(c+1)^2-c^2=2c+1$ at degree $\ell^5$
+(the lower-degree periodic contributions are unrestricted but cannot raise the degree above $5$);
+exact rational interpolation on sampled residue classes confirms that the
+degree-$7$ and degree-$6$ terms of $a_\ell(4\ell+c)$ agree with those of $a_\ell(4\ell+c+1)$
+(hence cancel in the difference) and that the surviving degree-$5$ coefficient is proportional to
+$2c+1$, so it is nonzero for every integer offset $c$. A residual of degree $5$ must be compared
+against absolute constants ($3$ and $7$). An injection yields $\ge0$; here one needs $\ge3$, and equality is nearly attained
+(true value $4$ at $\ell=6$). Box symmetries (conjugation, complement) supply no surplus set of the
+required size. This is the precise sense in which the elementary mechanism does not extend to
+Theorem~\ref{thm:main}, and why a quantitative input of a different kind is needed.
+
+\section{Finite certificate and reproducibility}\label{sec:repro}
+
+The companion directory \texttt{verification/} contains three standard-library Python programs and a
+recorded expectation file:
+\texttt{generate\_certificate.py} builds the $15{,}960$-obligation certificate from the definitions
+(offset constants derived from $\gauss{12}{6}$ inside the program, never read from a table);
+\texttt{verify\_certificate.py} re-derives those constants, checks structural completeness (no
+missing or duplicated obligations), checks nonnegativity of all Newton coefficients, checks the
+degree drop, and recomputes the full eight-coefficient Newton vector of \emph{every} one of the
+$15{,}960$ obligations through an independent dense code path (plus a seeded sample through a
+third route), failing non-zero on a missing, truncated, or value-tampered certificate;
+\texttt{independent\_check.py} verifies the theorem statements themselves by constructing $F_\ell$
+completely for $\ell=5,6,7$, sweeping $6\le\ell\le80$, testing large parameters, and confirming the
+equivalence of Theorem~\ref{thm:reduction} against direct unimodality for $5\le\ell\le60$. Reference
+timings on a current Fedora/x86\_64 machine with Python 3.15: generation about one second, full
+verification about sixty-five seconds (dominated by the $15{,}960$-class dense recomputation),
+independent checks under two seconds---so an outside reviewer can reproduce everything without
+specialized hardware. A SHA-256 manifest covers the package;
+it certifies byte integrity, not mathematical correctness.
+
+\section{The failure at the preceding parameter}
+
+At $\ell=5$ the window touches low degrees and the cancellation is no longer favourable: exact
+computation gives central coefficients $(15,16,15,16,15)$ at degrees $18,\dots,22$, so the sequence
+rises, falls, rises, falls, and unimodality fails while nonnegativity survives. This single instance
+is the content of Theorem~\ref{thm:sharp}; it also explains the shape of the finite base: the margin
+is smallest precisely at the bottom of the admissible range.
+
+\section{Relationship to previous work}\label{sec:prior}
+
+Unimodality of $\gauss{n}{k}$ is due to O'Hara \cite{ohara}, with Zeilberger's shorter proof
+\cite{zeilberger}; the KOH decomposition underlying both is the standard structural tool. Strict
+unimodality results of Pak--Panova \cite{pakpanova} and Zanello \cite{zanello2015} give lower bounds
+of magnitude $1$ on central first differences, insufficient for Theorem~\ref{thm:main}, where $3$ is
+required at $j=17$ and $7$ at $j=11$. Reiner--Stanton \cite{reinerstanton} conjectured unimodality
+of symmetric differences of Gaussian polynomials, of which the Stanley--Zanello family is a
+generalization; their proved cases do not cover our slice. Koutschan, Uncu and Wong \cite{kuw}
+resolved, using cylindrical algebraic decomposition and split points, two additional cases of the
+Stanley--Zanello conjecture --- lower parameters $6$ and $7$, with explicit exception tables --- and
+their $d$-strict monotonicity framework for single Gaussian polynomials stops computationally at
+$m=7$; the $k=8$ slice treated here lies outside their proved coverage, as recorded with explicit
+hypothesis/conclusion comparisons in the accompanying verification package. Quasipolynomiality of
+restricted partition functions is classical (Sylvester; denert--Desarmens and Sturmfels in the
+vector-partition setting), and positivity certificates based on finite exact computations are
+standard in computer-assisted proofs; we claim no novelty for those tools as such.
+
+\section{Limitations and open questions}\label{sec:open}
+
+\begin{enumerate}
+\item Scope. Theorem~\ref{thm:main} is a single fixed-parameter slice. It is not the full $k=8$
+case of \cite{sz}, and it says nothing about odd $k$.
+\item Certificate versus conceptual proof. Positivity of the margin polynomials is established by a
+$15{,}960$-class exact certificate. A hand-checkable argument — for instance a closed form for the
+residual quintic together with a sign analysis, or a combinatorial surplus injection of size $3$ at
+$j=17$ — is missing and is the most natural next target.
+\item Degree drop. The observed drop from degree $7$ to degree $5$ is uniform across all classes but
+is presently recorded only as a computation; a structural explanation (cancellation between the
+flat-top and right-edge layers of Section~\ref{sec:obstruction}) is open.
+\item Sharpness of the tail. The tail margins are enormous while the finite base has margin $1$;
+no optimality is claimed for $840$ as the junction between certificate and finite base. In fact the
+truncation of Lemma~3 holds for every $\ell\ge1$ (the offending arguments are $\le -11$ uniformly),
+while polynomiality of the surviving terms needs only $\ell\ge25$; a sharper packaging would certify
+$\ell\ge25$ per residue class and shrink the finite verification to $6\le\ell\le24$. The uniform
+parametrization used here trades that tightening for a single polynomial per residue class.
+\item Verification trust. The certificate is machine-verified exact-integer computation in a
+standard-library implementation; it has been reproduced by two independent implementations, but no
+interactive proof assistant formalization exists.
+\item No external peer review has been performed.
+\end{enumerate}
+
+\section*{Reproducibility statement}
+All computations are exact integer arithmetic in Python~3 with the standard library only, deterministic
+and randomized-sample-checked through a second code path; commands, reference outputs, software
+versions, and file hashes are recorded in \texttt{verification/EXPECTED\_RESULTS.md}; the complete
+runnable package is distributed as \texttt{math06-verification.zip}.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

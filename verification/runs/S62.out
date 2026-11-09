@@ -1,0 +1,26 @@
+=== (3) identity check: a_l(n+1)-a_l(n) == T1(l,n+1) - T2(l,n) ===
+direct-enumeration identity mismatches: 0 / 6
+identity mismatches: 0 / 30 (exact integers)
+=== (1)+(2) per-class degrees along n = 4l + c, l = r + 840*(t+1) ===
+ r=  0 c=-19: A_c deg=7, A_{c+1} deg=7; T1 deg=6, T2 deg=6; D=T1-T2 deg=5; (A_c+1 - A_c) deg=5
+    lc7(A_c)=lc7(A_c+1)? True (=438541689600000); lc6(T1)=lc6(T2)? True; lc5(T1)-lc5(T2)=21320880000 (nonzero=True)
+    lc7(A_{c+1}-A_c)=0, lc6(A_{c+1}-A_c)=0
+ r=  0 c=-10: A_c deg=7, A_{c+1} deg=7; T1 deg=6, T2 deg=6; D=T1-T2 deg=5; (A_c+1 - A_c) deg=5
+    lc7(A_c)=lc7(A_c+1)? True (=438541689600000); lc6(T1)=lc6(T2)? True; lc5(T1)-lc5(T2)=10948560000 (nonzero=True)
+    lc7(A_{c+1}-A_c)=0, lc6(A_{c+1}-A_c)=0
+ r=  1 c= -1: A_c deg=7, A_{c+1} deg=7; T1 deg=6, T2 deg=6; D=T1-T2 deg=5; (A_c+1 - A_c) deg=5
+    lc7(A_c)=lc7(A_c+1)? True (=438541689600000); lc6(T1)=lc6(T2)? True; lc5(T1)-lc5(T2)=576240000 (nonzero=True)
+    lc7(A_{c+1}-A_c)=0, lc6(A_{c+1}-A_c)=0
+ r=500 c=-19: A_c deg=7, A_{c+1} deg=7; T1 deg=6, T2 deg=6; D=T1-T2 deg=5; (A_c+1 - A_c) deg=5
+    lc7(A_c)=lc7(A_c+1)? True (=438541689600000); lc6(T1)=lc6(T2)? True; lc5(T1)-lc5(T2)=21320880000 (nonzero=True)
+    lc7(A_{c+1}-A_c)=0, lc6(A_{c+1}-A_c)=0
+ r=839 c= -1: A_c deg=7, A_{c+1} deg=7; T1 deg=6, T2 deg=6; D=T1-T2 deg=5; (A_c+1 - A_c) deg=5
+    lc7(A_c)=lc7(A_c+1)? True (=438541689600000); lc6(T1)=lc6(T2)? True; lc5(T1)-lc5(T2)=576240000 (nonzero=True)
+    lc7(A_{c+1}-A_c)=0, lc6(A_{c+1}-A_c)=0
+=== (4) analytic symmetry check: a_l(m) = a_l(8l-m) (palindromic) ===
+palindromic violations: 0
+=== certificate cross-check: degree drop 7->5 across all 15,960 classes ===
+classes with nonzero 5th Newton coefficient: 15960 / 15,960
+classes with nonzero 6th/7th Newton coefficient: 0 / 15,960
+=> true per-class degree is exactly 5 on 15960 classes, at most 5 everywhere
+MR-62 ANALYSIS VERDICT: PASS
