@@ -15,6 +15,9 @@ Checks performed
      stored values, so a value-tampered certificate cannot pass
   7. independent recomputation of a seeded sample of obligations (full 8-point Newton
      vectors) using the DIFFERENT dense code path
+  8. NATIVE recomputation of the entire finite base: all 19 margin inequalities for
+     every 6 <= l <= 839 are recomputed through the dense route and compared against
+     the stored finite_min_margin/finite_min_at, so a tampered finite claim cannot pass
 
 Usage: python3 verify_certificate.py [--sample 12] [--seed 20261108]
 """
@@ -195,9 +198,26 @@ def main():
     # consistency of the two ranges
     if cert["finite_range"] != [6, PERIOD - 1] or cert["tail_start"] != PERIOD:
         die("finite/tail boundary inconsistent (must be 6..839 and 840)")
-    if cert["finite_min_margin"] < 0:
-        die("finite base has a negative margin")
-    print(f"range boundary OK: finite 6..839, tail l>=840, no gap or overlap")
+
+    # 8. NATIVE finite-base recomputation: 19 offsets x all 6 <= l <= 839, dense route.
+    print("recomputing finite base 6..839 natively (dense route, 19 offsets)...")
+    fin_min = None
+    fin_at = None
+    for l in range(6, PERIOD):
+        a = a_l_trunc(l, 4 * l - 18 + 17 + 1)
+        for jj, j in enumerate(OFFSETS):
+            c = -18 + j
+            m = a[4 * l + c + 1] - a[4 * l + c] - Db[jj]
+            if m < 0:
+                die(f"finite margin negative at (l,j)=({l},{j}): {m}")
+            if fin_min is None or m < fin_min:
+                fin_min, fin_at = m, (l, j)
+    if [fin_min, list(fin_at)] != [cert["finite_min_margin"], cert["finite_min_at"]]:
+        die(f"stored finite minimum {cert['finite_min_margin']} at {cert['finite_min_at']} "
+            f"does not match recomputed {fin_min} at {list(fin_at)}")
+    print(f"finite base OK: recomputed all 834 l-values x 19 offsets, "
+          f"min {fin_min} at (l,j)={list(fin_at)} matches certificate")
+    print("range boundary OK: finite 6..839, tail l>=840, no gap or overlap")
     print("VERDICT: PASS")
     return 0
 

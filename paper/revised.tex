@@ -2,6 +2,9 @@
 \usepackage{amsmath,amssymb,amsthm,booktabs}
 \usepackage[margin=1.1in]{geometry}
 \usepackage[numbers,sort&compress]{natbib}
+\usepackage{microtype}
+\usepackage{xurl}
+\setlength{\emergencystretch}{1.5em}
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -12,7 +15,9 @@
 \newcommand{\coeff}[1]{[q^{#1}]}
 \title{\bf Sharp unimodality for a fixed-parameter slice of the Stanley--Zanello family of
 Gaussian polynomial differences}
-\author{[Author placeholder --- to be completed upon owner approval]}
+\author{Gerald\thanks{Prepared with substantial assistance from an AI system (2026);
+the human author takes full responsibility for all statements and proofs. The
+AI-assisted internal review recorded in the accompanying repository is not peer review.}}
 \date{9 November 2026}
 
 \begin{document}
@@ -25,8 +30,10 @@ For an integer $\ell \ge 5$ let
 \]
 We prove that $F_\ell$ is unimodal for every $\ell \ge 6$, and that the bound is best possible:
 $F_5$ is coefficientwise nonnegative but not unimodal. The family is a fixed-parameter slice
-$(k,b)=(8,12)$ of the difference family of Stanley and Zanello, whose conjecture predicts this
-behaviour and is proved only for $k\le 5$. The argument has three parts: an elementary
+$(k,b)=(8,12)$ of the difference family of Stanley and Zanello, whose conjecture predicts
+eventual unimodality for every fixed~$k$: Stanley and Zanello proved the cases $k\le5$, and
+Koutschan--Uncu--Wong subsequently settled $k=6,7$, so $k=8$ is the smallest unresolved
+parameter. The argument has three parts: an elementary
 Ferrers-diagram injection gives coefficientwise nonnegativity; symmetry about the common centre
 $4\ell$ reduces unimodality to nineteen fixed-offset first-difference inequalities; and those
 inequalities are settled for all $\ell$ by combining an exact quasipolynomial description of
@@ -98,8 +105,9 @@ $\coeff{18..22}F_5=(15,16,15,16,15)$.
 \end{theorem}
 
 Theorem~\ref{thm:nonneg} is proved by an elementary injection (Section~\ref{sec:injection});
-Theorem~\ref{thm:main} by Theorems~\ref{thm:reduction} and \ref{thm:certificate}
-(Sections~\ref{sec:reduction}--\ref{sec:certificate}); Theorem~\ref{thm:sharp} by direct exact
+Theorem~\ref{thm:main} by Theorems~\ref{thm:reduction} and \ref{thm:certificate} together with
+Proposition~\ref{thm:finite} below (Sections~\ref{sec:reduction}--\ref{sec:certificate});
+Theorem~\ref{thm:sharp} by direct exact
 computation, which is legitimate because it is a single instance.
 
 \section{The Ferrers-diagram injection and nonnegativity}\label{sec:injection}
@@ -282,6 +290,29 @@ Theorem~\ref{thm:main} lives in the finite base $6\le\ell\le839$, where the mini
 attained at $(\ell,j)=(6,16)$, and where the central surplus equals exactly $4$ against the required
 $3$ at $\ell=6,7$.
 
+The finite base is likewise a formal component of the proof chain, not an afterthought.
+
+\begin{proposition}[Finite base]\label{thm:finite}
+For every $6\le\ell\le839$ and every $j\in\{-1,0,\dots,17\}$, the first-difference inequality of
+Theorem~\ref{thm:reduction} holds. The verification is exact integer computation over all
+$19\cdot834$ instances (no floating point); the minimum margin is~$1$, attained at
+$(\ell,j)=(6,16)$.
+\end{proposition}
+
+\begin{proof}
+For each $\ell$ in the range, the coefficients $a_\ell(n)$ for $n\le4\ell$ are computed exactly as
+follows: the power series of $\prod_{i=1}^{8}(1-q^{i})^{-1}$ is built by the coin-change recurrence
+and truncated at degree $4\ell$, then the numerator factors $1-q^{\ell+i}$, $i=1,\dots,8$, are
+applied by in-place descending subtraction. Since every numerator factor has nonnegative exponents,
+the truncation at degree $4\ell$ is exact for all coefficients accessed, and the result is
+$[\ell+8\choose 8]_q$ up to degree $4\ell$. The first differences
+$a_\ell(4\ell-18+j+1)-a_\ell(4\ell-18+j)$ are then compared with $Db_j$ in exact integers.
+The accompanying package performs this computation through two distinct code paths (the
+inclusion--exclusion route of the generator, Lemma~\ref{lem:ie}, and the dense truncated
+multiplication route of the verifier and \texttt{r1\_decisive.py}); both report the same minimum
+margin and its location.
+\end{proof}
+
 \subsection{Why this is a certificate and not experimental evidence}\label{sec:why}
 Corollary~\ref{cor:poly} and Lemma~\ref{lem:newton} together turn the computation into a proof of a
 statement about \emph{all} $\ell\ge840$: the computation only verifies the hypotheses of a theorem
@@ -348,7 +379,8 @@ is smallest precisely at the bottom of the admissible range.
 
 \section{Relationship to previous work}\label{sec:prior}
 
-Unimodality of $\gauss{n}{k}$ is due to O'Hara \cite{ohara}, with Zeilberger's shorter proof
+Unimodality of $\gauss{n}{k}$ goes back to Sylvester \cite{sylvester1878}; O'Hara \cite{ohara}
+gave the first fully constructive proof, followed by Zeilberger's shorter exposition
 \cite{zeilberger}; the KOH decomposition underlying both is the standard structural tool. Strict
 unimodality results of Pak--Panova \cite{pakpanova} and Zanello \cite{zanello2015} give lower bounds
 of magnitude $1$ on central first differences, insufficient for Theorem~\ref{thm:main}, where $3$ is
@@ -360,8 +392,9 @@ Stanley--Zanello conjecture --- lower parameters $6$ and $7$, with explicit exce
 their $d$-strict monotonicity framework for single Gaussian polynomials stops computationally at
 $m=7$; the $k=8$ slice treated here lies outside their proved coverage, as recorded with explicit
 hypothesis/conclusion comparisons in the accompanying verification package. Quasipolynomiality of
-restricted partition functions is classical (Sylvester; denert--Desarmens and Sturmfels in the
-vector-partition setting), and positivity certificates based on finite exact computations are
+restricted partition functions is classical (Sylvester; see \cite[Ch.~4]{stanleyec1}); in the
+vector-partition setting it is a special case of the general theory of \cite{sturmfels}, and
+positivity certificates based on finite exact computations are
 standard in computer-assisted proofs; we claim no novelty for those tools as such.
 
 \section{Limitations and open questions}\label{sec:open}
@@ -378,7 +411,7 @@ is presently recorded only as a computation; a structural explanation (cancellat
 flat-top and right-edge layers of Section~\ref{sec:obstruction}) is open.
 \item Sharpness of the tail. The tail margins are enormous while the finite base has margin $1$;
 no optimality is claimed for $840$ as the junction between certificate and finite base. In fact the
-truncation of Lemma~3 holds for every $\ell\ge1$ (the offending arguments are $\le -11$ uniformly),
+truncation of Lemma~\ref{lem:ie} holds for every $\ell\ge1$ (the offending arguments are $\le -11$ uniformly),
 while polynomiality of the surviving terms needs only $\ell\ge25$; a sharper packaging would certify
 $\ell\ge25$ per residue class and shrink the finite verification to $6\le\ell\le24$. The uniform
 parametrization used here trades that tightening for a single polynomial per residue class.
@@ -392,7 +425,9 @@ interactive proof assistant formalization exists.
 All computations are exact integer arithmetic in Python~3 with the standard library only, deterministic
 and randomized-sample-checked through a second code path; commands, reference outputs, software
 versions, and file hashes are recorded in \texttt{verification/EXPECTED\_RESULTS.md}; the complete
-runnable package is distributed as \texttt{math06-verification.zip}.
+runnable package is published at
+\url{https://github.com/GeWoHu/gaussian-polynomial-unimodality} under the
+\texttt{verification/} directory.
 
 \bibliographystyle{plainnat}
 \bibliography{references}

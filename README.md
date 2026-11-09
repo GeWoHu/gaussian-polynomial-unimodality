@@ -16,10 +16,11 @@ library alone.
 
 ## Status of claims
 
-- **Internally verified** — regenerated certificate, three independent machine
-  verification routes, full corruption/tamper battery, and an independent
-  adversarial AI review pass with zero blocking findings (see `docs/` and
-  `verification/`).
+- **Internally verified** — regenerated certificate, multiple cross-checking
+  verification routes (inclusion–exclusion vs dense truncated multiplication;
+  distinct algorithms, not independently authored clean-room implementations),
+  full corruption/tamper battery, and an adversarial AI review pass with zero
+  blocking findings (see `docs/` and `verification/`).
 - **Ready for independent human review.** This is *not* a peer-reviewed or
   published result.
 - **Novelty is provisional and priority remains unresolved.** The statement is
@@ -32,7 +33,9 @@ library alone.
 
 ## Reproduce in three commands
 
-Requires Python 3.10+ (tested on 3.15.0), standard library only, ~80 seconds total.
+Requires Python 3.10+ (tested on 3.15.0), standard library only, ~70 seconds total.
+The certificate payload embeds no runtime metadata, so regeneration is byte-identical
+across Python versions.
 
 ```bash
 cd verification
@@ -45,10 +48,12 @@ Expected: all three exit 0 with `VERDICT: PASS`, and the regenerated
 certificate reproduces byte-for-byte:
 
 ```
-e3930e99e9888acdd7efdab39e65519476f0a907f9ff7637e40b40f9cff60e95  certificate.json
+d6454b2bcb3197693ea89f3214ba3319f3e2a1f3764bda0b2e7aa12feac123ec  certificate.json
 ```
 
-A third exact route (`r1_decisive.py`, ~12 s) re-derives stored certificate
+The verifier recomputes the entire finite base (all 19 inequalities for every
+6 ≤ ℓ ≤ 839) natively, so a tampered finite-range claim cannot pass. An
+cross-check route (`r1_decisive.py`, ~12 s) re-derives stored certificate
 values through yet another code path. `docs/CHANGES.md` records the
 manuscript-revision history, including the Section 6.2 asymptotic-degree
 correction (residual degree is exactly 5, not 3).
@@ -57,11 +62,16 @@ correction (residual degree is exactly 5, not 3).
 
 | path | contents |
 |---|---|
-| `paper/revised.pdf` | the manuscript (8 pages) |
+| `paper/revised.pdf` | the manuscript (9 pages) |
 | `paper/revised.tex`, `references.bib`, `revised.bbl` | LaTeX source (compiles with tectonic or pdflatex+bibtex) |
 | `verification/` | standalone exact-integer scripts + the certificate + expected results + quickstart |
 | `verification/runs/` | captured reproduction logs |
 | `docs/` | proof audit, Section 6.2 analysis, novelty audit, change log |
+
+The verifier's sampled route and the finite-base recomputation use the dense
+code path; the generator uses inclusion–exclusion over restricted partition
+functions. These are different algorithms sharing some helper code, and are
+described as cross-checking routes rather than independent implementations.
 
 ## License
 

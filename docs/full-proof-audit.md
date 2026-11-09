@@ -2,8 +2,9 @@
 
 Auditor: orchestrator (exact integer arithmetic throughout; reruns in
 `verification/runs/REPRO.out`, `verification/runs/S62.out`). The hostile referee (META-01,
-different provider) independently repeats the computational parts in its own clean directory;
-its report is `referee/REPORT.md`.
+different provider) independently repeated the computational parts in its own clean directory
+(verdict: APPROVED, zero blocking findings across eight attack axes; the full referee report is
+retained in the research record, not shipped with this repository).
 
 Theorem under audit (unchanged): `F_ℓ(q) = [ℓ+8 choose 8]_q − q^(4ℓ−18)[12 choose 6]_q`
 coefficientwise nonnegative for every integer ℓ ≥ 5; unimodal for every ℓ ≥ 6; non-unimodal at

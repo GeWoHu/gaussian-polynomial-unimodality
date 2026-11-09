@@ -1,7 +1,8 @@
 # Novelty & significance audit — MATH-06-MR
 
 Method: primary-source extraction (arXiv abs records + full-text theorem statements retrieved
-2026-11-08/09; raw receipts in `../math06-publication/literature/raw/`), fresh searches for
+2026-11-08/09; raw search receipts are archived in the research record, not shipped with this
+repository), fresh searches for
 2024–2026 resolutions, and hypothesis-level comparison. Search-absence is never used alone to
 infer novelty. Classification per mission scale: KNOWN / ELEMENTARY-CONSEQUENCE /
 APPARENTLY-NEW-PRIORITY-UNRESOLVED / GENUINELY-NEW-CANDIDATE.

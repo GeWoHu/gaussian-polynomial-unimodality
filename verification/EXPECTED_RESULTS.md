@@ -2,13 +2,14 @@
 
 Reference machine: Fedora (x86_64), `python3` = **Python 3.15.0**, verification uses the
 **standard library only** (`requirements.txt` is empty by design). No floating point anywhere.
-Reference run: 2026-11-08 21:18 CST.
+The certificate payload is version-independent (no runtime metadata embedded), so regeneration
+is byte-identical on any Python >= 3.10. Reference run: 2026-11-09 (R2).
 
 ## Artifacts and hashes
 
 | file | sha256 |
 |---|---|
-| `certificate.json` | `e3930e99e9888acdd7efdab39e65519476f0a907f9ff7637e40b40f9cff60e95` |
+| `certificate.json` | `d6454b2bcb3197693ea89f3214ba3319f3e2a1f3764bda0b2e7aa12feac123ec` |
 
 A hash match confirms byte-level integrity of the shipped certificate; it says nothing about
 theorem correctness. Correctness is established by the mathematical checks below plus the
@@ -18,9 +19,9 @@ independent recomputation step in `verify_certificate.py`.
 
 ```bash
 cd verification
-python3 generate_certificate.py --out certificate.json   # ~1 s reference
-python3 verify_certificate.py --cert certificate.json --sample 12   # ~65 s reference (hardened verifier: full 15,960-class recomputation)
-python3 independent_check.py --n 80                      # 0.19 s reference
+python3 generate_certificate.py --out certificate.json   # 1.13 s reference
+python3 verify_certificate.py --cert certificate.json --sample 12   # ~66 s reference (hardened verifier: full 15,960-class recomputation + native 6..839 finite-base recomputation)
+python3 independent_check.py --n 80                      # 0.14 s reference
 ```
 
 ### 1. `generate_certificate.py`

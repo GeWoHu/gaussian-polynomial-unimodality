@@ -64,3 +64,24 @@ this mission changes four expository passages. Full diff: 33 lines across 4 bloc
   present in §1 and §10 as in R1, unchanged. ✓
 - Sharpness example ℓ=5 and the coefficientwise-nonnegativity-for-ℓ≥5 claim: preserved verbatim. ✓
 - Author placeholder line: preserved (owner approval still pending). ✓
+
+## R2 — post-release repair (2026-11-09, external review "Hermes")
+
+1. Deterministic certificate: removed the embedded `runtime.python` field from
+   `certificate.json` (it broke byte-for-byte regeneration across Python versions while the
+   README promised "3.10+"). New reference hash `d6454b2bcb3197693ea89f3214ba3319f3e2a1f3764bda0b2e7aa12feac123ec`;
+   all mathematical summary values unchanged (min tail margin 3,552,106,826; finite min 1 at (6,16)).
+2. `verify_certificate.py` now recomputes the entire finite base (all 19 offsets, every
+   6 <= l <= 839) natively through the dense route and compares against the stored
+   finite_min_margin/finite_min_at; a tampered finite-range claim can no longer pass.
+3. Manuscript: author set to Gerald (AI-assistance footnote); abstract corrected
+   (k<=5 by Stanley-Zanello, k=6,7 by KUW; eventual-unimodality vs sharp threshold
+   distinguished); formal Proposition (Finite base) added and invoked in the proof chain;
+   Sylvester/O'Hara historical attribution corrected with proper citation (Philos. Mag.
+   Ser. 5, 5 (1878), 178-188); hardcoded "Lemma 3" -> Lemma ref; the nonexistent
+   math06-verification.zip claim replaced by the repository URL.
+4. Bibliography: KUW retyped @inproceedings (ISSAC '23); DOIs added throughout; internal
+   audit notes removed; previously unused entries (stanleyec1, sturmfels) now cited;
+   misspelled uncited "denert--Desarmens" mention removed. PDF rebuilt warning-free (9 pages).
+5. Claim language: "independent implementations" -> "cross-checking code paths" in
+   README and quickstart; dangling internal paths removed from docs.

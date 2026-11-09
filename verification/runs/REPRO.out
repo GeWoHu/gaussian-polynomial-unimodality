@@ -1,47 +1,35 @@
-=== MATH-06-MR clean-room reproduction 2026-11-09 08:32:29 CST ===
+=== MATH-06-R2 clean-room reproduction 2026-11-09 14:44:19 CST ===
 Python 3.15.0 (3.15.0-1.fc45.x86_64, Oct  9 2026, 00:00:00) [GCC 16.2.1 20260819 (Red Hat 16.2.1-2)]
 --- 1 generate:
+certificate written: certificate.json
 obligations=15960 negative_newton_classes=0 classes_with_degree>5=0
 min_tail_Q0=3552106826 finite_min_margin=1 at (l,j)=(6, 16)
 Db_derived=[1, 0, 1, 1, 2, 2, 4, 2, 5, 4, 6, 4, 7, 3, 6, 3, 4, 0, 3]
-
-real	0m1.150s
-user	0m1.142s
-sys	0m0.005s
-exit=0
-e3930e99e9888acdd7efdab39e65519476f0a907f9ff7637e40b40f9cff60e95  certificate.json
---- 2 verify (full value check):
+1.12 s
+--- 2 verify (full recomputation + native finite base):
+hash OK: d6454b2bcb3197693ea89f3214ba3319f3e2a1f3764bda0b2e7aa12feac123ec
+Db re-derived from [12 choose 6]_q OK: [1, 0, 1, 1, 2, 2, 4, 2, 5, 4, 6, 4, 7, 3, 6, 3, 4, 0, 3]
+structure OK: 15960 obligations, complete and duplicate-free
+all Newton coefficients nonnegative OK (15,960/15,960)
+degree <= 5 confirmed: classes with nonzero 6th/7th Newton order = 0
 full value check OK: 15,960/15,960 classes match dense octuple recomputation
 independent recomputation OK on 12 sampled obligations (dense Gaussian code path, seed 20261108)
+recomputing finite base 6..839 natively (dense route, 19 offsets)...
+finite base OK: recomputed all 834 l-values x 19 offsets, min 1 at (l,j)=[6, 16] matches certificate
 range boundary OK: finite 6..839, tail l>=840, no gap or overlap
 VERDICT: PASS
-
-real	1m5.008s
-user	1m4.785s
-sys	0m0.102s
-exit=0
+66.07 s
 --- 3 independent_check:
 reduction equivalence (direct unimodality vs 19 inequalities) l=5..60: mismatches none
 Db derived here: [1, 0, 1, 1, 2, 2, 4, 2, 5, 4, 6, 4, 7, 3, 6, 3, 4, 0, 3]
 VERDICT: PASS
-
-real	0m0.151s
-user	0m0.144s
-sys	0m0.005s
-exit=0
---- 4 r1_decisive:
+0.14 s
+--- 4 r1_decisive (cross-check route):
+(B) dense octuple reconstruction on 120 random classes...
 (B) RESULT: sampled classes with octuple mismatch = 0 / 120
 (C) finite base 6..839 margins (dense route)...
 (C) RESULT: negative margins = 0; min margin = 1 at (6, 16)
 R1 DECISIVE VERDICT: PASS
-
-real	0m11.521s
-user	0m11.336s
-sys	0m0.161s
-exit=0
---- corruption value: exit=1 (expect 1)
---- corruption dup: exit=1 (expect 1)
---- corruption drop: exit=1 (expect 1)
---- corruption truncated: exit=1 (expect 1)
---- corruption missing: exit=1 (expect 1)
---- intact control: exit=0 (expect 0)
+11.32 s
+--- hash:
+d6454b2bcb3197693ea89f3214ba3319f3e2a1f3764bda0b2e7aa12feac123ec  certificate.json

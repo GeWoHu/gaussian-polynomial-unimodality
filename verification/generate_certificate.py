@@ -32,7 +32,6 @@ Exit 0 on success. Standard library only.
 """
 import argparse
 import json
-import platform
 import sys
 from math import comb
 
@@ -176,7 +175,6 @@ def main():
         "min_tail_margin_Q0": min_tail,
         "finite_min_margin": fin_min,
         "finite_min_at": list(fin_at),
-        "runtime": {"python": platform.python_version(), "stdlib_only": True},
         "records": records,
     }
     with open(args.out, "w") as fh:
